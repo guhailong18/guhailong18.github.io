@@ -4,6 +4,69 @@
   
     
     <entry>
+      <title>Java类-入门</title>
+      <link href="/posts/1GTXTHD/"/>
+      <url>/posts/1GTXTHD/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="概述">概述</h2><h2 id="1">1.</h2><p>示例：</p><p>计算矩形面积</p><pre class=" language-language-java"><code class="language-language-java">class area{    float lenth;    float weight;    flost a(){        float re=lenth*weight;        return re;    }}public class b{    public static void main(String args[]){        area first;        first=new area();        first.lenth=10;        first.weight=2;        System.out.print(first.a)    }}</code></pre><h2 id="2">2.</h2><h2 id="3">3.</h2><h2 id="4">4.</h2><h2 id="5">5.</h2><h6 id="参考链接："><strong>参考链接：</strong></h6><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 古客 </tag>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>rclone挂载onedrive</title>
+      <link href="/posts/3FFVHFJ/"/>
+      <url>/posts/3FFVHFJ/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="概述">概述</h2><h2 id="1-Window下挂载">1.Window下挂载</h2><h2 id="2">2.</h2><h2 id="3">3.</h2><h2 id="4">4.</h2><p>挂载</p><pre><code>rclone mount onedrive-guke:/ /home/one-guke --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000</code></pre><h3 id="开机自动挂载">开机自动挂载</h3><ul><li>下载并编辑自启脚本</li></ul><pre class=" language-language-shell"><code class="language-language-shell">wget -N git.io/rcloned && nano rcloned</code></pre><ul><li>修改内容：</li></ul><pre class=" language-language-none"><code class="language-language-none">NAME="Onedrive" #Rclone配置时填写的nameREMOTE=''  #远程文件夹，网盘里的挂载的一个文件夹，留空为整个网盘LOCAL='/Onedrive'  #挂载地址，VPS本地挂载目录</code></pre><ul><li>设置开机自启</li></ul><pre class=" language-language-shell"><code class="language-language-shell">mv rcloned /etc/init.d/rclonedchmod +x /etc/init.d/rclonedupdate-rc.d -f rcloned defaults # Debian/Ubuntuchkconfig rcloned on # CentOSbash /etc/init.d/rcloned start</code></pre><p>看到 <code>[信息] rclone 启动成功 !</code> 即可。</p><h4 id="管理">管理</h4><p>开始挂载 <code>bash /etc/init.d/rcloned start</code></p><p>停止挂载 <code>bash /etc/init.d/rcloned stop</code></p><p>重新挂载 <code>bash /etc/init.d/rcloned restart</code></p><p>查看日志 <code>tail -f /$HOME/.rclone/rcloned.log</code></p><h4 id="卸载自启挂载">卸载自启挂载</h4><pre class=" language-language-none"><code class="language-language-none">bash /etc/init.d/rcloned stopupdate-rc.d -f rcloned remove # Debian/Ubuntuchkconfig rcloned off # CentOSrm -f /etc/init.d/rcloned</code></pre><h2 id="5-常用Rclone命令">5.常用Rclone命令</h2><pre><code>### 文件上传rclone copy /home/backup gdrive:backup  # 本地路径 配置名字:网盘文件夹路径### 文件下载rclone copy gdrive:backup /home/backup  # 配置名字:网盘文件夹路径 本地路径### 新建文件夹rclone mkdir gdrive:backup              # 配置名字:网盘文件夹路径### 获取文件夹大小rclone size gdrive:backup               # 配置名字:网盘文件夹路径### 列表rclone ls gdrive:backuprclone lsl gdrive:backup # 比上面多一个显示上传时间rclone lsd gdrive:backup # 只显示文件夹### 挂载rclone mount gdrive:mm /root/mm &amp;### 卸载fusermount -u  /root/mm#### 其他 ######## https://softlns.github.io/2016/11/28/rclone-guide/rclone config - 以控制会话的形式添加rclone的配置，配置保存在.rclone.conf文件中。rclone copy - 将文件从源复制到目的地址，跳过已复制完成的。rclone sync - 将源数据同步到目的地址，只更新目的地址的数据。   –dry-run标志来检查要复制、删除的数据rclone move - 将源数据移动到目的地址。rclone delete - 删除指定路径下的文件内容。rclone purge - 清空指定路径下所有文件数据。rclone mkdir - 创建一个新目录。rclone rmdir - 删除空目录。rclone check - 检查源和目的地址数据是否匹配。rclone ls - 列出指定路径下所有的文件以及文件大小和路径。rclone lsd - 列出指定路径下所有的目录/容器/桶。rclone lsl - 列出指定路径下所有文件以及修改时间、文件大小和路径。rclone md5sum - 为指定路径下的所有文件产生一个md5sum文件。rclone sha1sum - 为指定路径下的所有文件产生一个sha1sum文件。rclone size - 获取指定路径下，文件内容的总大小。.rclone version - 查看当前版本。rclone cleanup - 清空remote。rclone dedupe - 交互式查找重复文件，进行删除/重命名操作。重启：systemctl restart rclone停止：systemctl stop rclone状态：systemctl status rclone</code></pre><h6 id="参考链接："><strong>参考链接：</strong></h6><p><a href="https://sunpma.com/659.html" target="_blank" rel="noopener external nofollow noreferrer">https://sunpma.com/659.html</a></p><p><a href="https://p3terx.com/archives/linux-vps-uses-rclone-to-mount-network-drives-such-as-onedrive-and-google-drive.html" target="_blank" rel="noopener external nofollow noreferrer">https://p3terx.com/archives/linux-vps-uses-rclone-to-mount-network-drives-such-as-onedrive-and-google-drive.html</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 古客 </tag>
+            
+            <tag> rclone </tag>
+            
+            <tag> onedrive </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>GD上传</title>
+      <link href="/posts/3MZACY9/"/>
+      <url>/posts/3MZACY9/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="概述">概述</h2><h2 id="1">1.</h2><h2 id="2">2.</h2><h2 id="3">3.</h2><h2 id="4">4.</h2><h2 id="5-配置文件">5.配置文件</h2><p>只需将插件放在<code>plugins</code>配置文件旁边的文件夹中即可安装插件。（通常是这样<code>~/.flexget/plugins/</code>，但是如果您的配置位于不同的<a href="https://www.flexget.com/Configuration#location" target="_blank" rel="noopener external nofollow noreferrer">位置</a>，则可能会有所不同。）也可以将插件打包在单独的Python包中，例如<a href="https://github.com/Flexget/extras" target="_blank" rel="noopener external nofollow noreferrer">FlexGet extras</a>。</p><p>注：插件的配置一般是在task下的，</p><p>示例</p><pre><code>tasks:  high_rated_movies:    best_quality:      # 只要质量最好的      on_best: do_nothing      on_lower: reject    imdb:      min_score: 8.5      min_votes: 5000      #拒绝所有低于1MiB和高于12000MiB的，根据自己的机器配置    content_size:    min: 1   max: 12000   strict: no  </code></pre><h6 id="参考链接："><strong>参考链接：</strong></h6><p>入门：<a href="https://www.hostloc.com/thread-711986-1-1.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.hostloc.com/thread-711986-1-1.html</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 古客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Lingo笔记一</title>
       <link href="/posts/1AFXJAX/"/>
       <url>/posts/1AFXJAX/</url>
@@ -63,29 +126,6 @@
             <tag> 数学 </tag>
             
             <tag> 古客 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>rclone挂载onedrive</title>
-      <link href="/posts/3FFVHFJ/"/>
-      <url>/posts/3FFVHFJ/</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h2 id="概述">概述</h2><h2 id="1-Window下挂载">1.Window下挂载</h2><h2 id="2">2.</h2><h2 id="3">3.</h2><h2 id="4">4.</h2><p>挂载</p><pre><code>rclone mount onedrive-guke:/ /home/one-guke --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000</code></pre><h3 id="开机自动挂载">开机自动挂载</h3><ul><li>下载并编辑自启脚本</li></ul><pre class=" language-language-shell"><code class="language-language-shell">wget -N git.io/rcloned && nano rcloned</code></pre><ul><li>修改内容：</li></ul><pre class=" language-language-none"><code class="language-language-none">NAME="Onedrive" #Rclone配置时填写的nameREMOTE=''  #远程文件夹，网盘里的挂载的一个文件夹，留空为整个网盘LOCAL='/Onedrive'  #挂载地址，VPS本地挂载目录</code></pre><ul><li>设置开机自启</li></ul><pre class=" language-language-shell"><code class="language-language-shell">mv rcloned /etc/init.d/rclonedchmod +x /etc/init.d/rclonedupdate-rc.d -f rcloned defaults # Debian/Ubuntuchkconfig rcloned on # CentOSbash /etc/init.d/rcloned start</code></pre><p>看到 <code>[信息] rclone 启动成功 !</code> 即可。</p><h4 id="管理">管理</h4><p>开始挂载 <code>bash /etc/init.d/rcloned start</code></p><p>停止挂载 <code>bash /etc/init.d/rcloned stop</code></p><p>重新挂载 <code>bash /etc/init.d/rcloned restart</code></p><p>查看日志 <code>tail -f /$HOME/.rclone/rcloned.log</code></p><h4 id="卸载自启挂载">卸载自启挂载</h4><pre class=" language-language-none"><code class="language-language-none">bash /etc/init.d/rcloned stopupdate-rc.d -f rcloned remove # Debian/Ubuntuchkconfig rcloned off # CentOSrm -f /etc/init.d/rcloned</code></pre><h2 id="5-常用Rclone命令">5.常用Rclone命令</h2><pre><code>### 文件上传rclone copy /home/backup gdrive:backup  # 本地路径 配置名字:网盘文件夹路径### 文件下载rclone copy gdrive:backup /home/backup  # 配置名字:网盘文件夹路径 本地路径### 新建文件夹rclone mkdir gdrive:backup              # 配置名字:网盘文件夹路径### 获取文件夹大小rclone size gdrive:backup               # 配置名字:网盘文件夹路径### 列表rclone ls gdrive:backuprclone lsl gdrive:backup # 比上面多一个显示上传时间rclone lsd gdrive:backup # 只显示文件夹### 挂载rclone mount gdrive:mm /root/mm &amp;### 卸载fusermount -u  /root/mm#### 其他 ######## https://softlns.github.io/2016/11/28/rclone-guide/rclone config - 以控制会话的形式添加rclone的配置，配置保存在.rclone.conf文件中。rclone copy - 将文件从源复制到目的地址，跳过已复制完成的。rclone sync - 将源数据同步到目的地址，只更新目的地址的数据。   –dry-run标志来检查要复制、删除的数据rclone move - 将源数据移动到目的地址。rclone delete - 删除指定路径下的文件内容。rclone purge - 清空指定路径下所有文件数据。rclone mkdir - 创建一个新目录。rclone rmdir - 删除空目录。rclone check - 检查源和目的地址数据是否匹配。rclone ls - 列出指定路径下所有的文件以及文件大小和路径。rclone lsd - 列出指定路径下所有的目录/容器/桶。rclone lsl - 列出指定路径下所有文件以及修改时间、文件大小和路径。rclone md5sum - 为指定路径下的所有文件产生一个md5sum文件。rclone sha1sum - 为指定路径下的所有文件产生一个sha1sum文件。rclone size - 获取指定路径下，文件内容的总大小。.rclone version - 查看当前版本。rclone cleanup - 清空remote。rclone dedupe - 交互式查找重复文件，进行删除/重命名操作。重启：systemctl restart rclone停止：systemctl stop rclone状态：systemctl status rclone</code></pre><h6 id="参考链接："><strong>参考链接：</strong></h6><p><a href="https://sunpma.com/659.html" target="_blank" rel="noopener external nofollow noreferrer">https://sunpma.com/659.html</a></p><p><a href="https://p3terx.com/archives/linux-vps-uses-rclone-to-mount-network-drives-such-as-onedrive-and-google-drive.html" target="_blank" rel="noopener external nofollow noreferrer">https://p3terx.com/archives/linux-vps-uses-rclone-to-mount-network-drives-such-as-onedrive-and-google-drive.html</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 古客 </tag>
-            
-            <tag> rclone </tag>
-            
-            <tag> onedrive </tag>
             
         </tags>
       
